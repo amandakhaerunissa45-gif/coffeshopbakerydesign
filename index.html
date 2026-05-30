@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coffe Shop — Sweet Moments Start Here</title>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English:ital@0;1&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --brown-dark:   #5C2717;
+      --brown-mid:    #774428;
+      --brown-light:  #8D3C1E;
+      --cream:        #FFF1CA;
+      --sand:         #D8C7B3;
+      --card:         #DBC7AF;
+      --peach:        #F2C290;
+      --white:        #ffffff;
+      --green:        #4DD33B;
+      --text-dark:    #331105;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER / NAV ── */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      z-index: 1000;
+      background: rgba(92,39,23,0.96);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    }
+    .nav-brand {
+      font-family: 'IM Fell English', serif;
+      font-size: 26px;
+      color: var(--peach);
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+    nav { display: flex; gap: 32px; align-items: center; }
+    nav a {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 17px;
+      color: var(--cream);
+      text-decoration: none;
+      position: relative;
+      transition: color .25s;
+    }
+    nav a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--peach);
+      transition: width .3s;
+    }
+    nav a:hover { color: var(--peach); }
+    nav a:hover::after { width: 100%; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--brown-mid);
+      color: var(--white);
+      border: none; cursor: pointer;
+      border-radius: 999px;
+      font-family: 'IM Fell Double Pica', serif;
+      transition: background .25s, transform .15s;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--brown-dark); transform: translateY(-1px); }
+    .btn-nav     { padding: 8px 24px; font-size: 17px; }
+    .btn-primary { padding: 12px 32px; font-size: 18px; }
+    .btn-sm      { padding: 7px 20px; font-size: 15px; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--brown-dark) 0%, #7F3E17 55%, var(--sand) 100%);
+      display: flex; align-items: center;
+      padding: 100px 80px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    #home::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(255,241,202,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 580px; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: var(--brown-mid);
+      color: var(--peach);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700; font-size: 13px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 20px; border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(48px, 6vw, 82px);
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 17px; color: var(--sand);
+      line-height: 1.7; margin-bottom: 36px; max-width: 460px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-outline {
+      padding: 12px 32px; font-size: 17px;
+      background: transparent;
+      border: 2px solid var(--cream);
+      color: var(--cream);
+      border-radius: 999px;
+      font-family: 'IM Fell Double Pica', serif;
+      cursor: pointer; text-decoration: none;
+      transition: background .25s, color .25s;
+    }
+    .btn-outline:hover { background: var(--cream); color: var(--brown-dark); }
+    .hero-img {
+      position: absolute; right: 80px; top: 50%;
+      transform: translateY(-50%);
+      width: clamp(280px, 30vw, 420px);
+      border-radius: 50%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+      object-fit: cover;
+      border: 6px solid rgba(255,241,202,0.2);
+      animation: float 5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(-50%) translateY(0); }
+      50%      { transform: translateY(-50%) translateY(-16px); }
+    }
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--sand); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll span { font-size: 20px; }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 90px 80px; }
+    .section-tag {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 14px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--brown-mid);
+      display: block; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--brown-dark); margin-bottom: 14px; line-height: 1.1;
+    }
+    .section-sub {
+      font-size: 16px; color: #7a5c4a; max-width: 520px; line-height: 1.7;
+    }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .section-sub { margin: 0 auto; }
+
+    /* ── PRODUCTS ── */
+    #services { background: var(--sand); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 28px;
+    }
+    .product-card {
+      background: var(--card);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      transition: transform .3s, box-shadow .3s;
+      box-shadow: 0 4px 20px rgba(92,39,23,0.1);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(92,39,23,0.2);
+    }
+    .sale-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--green); color: #fff;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      padding: 3px 10px; border-radius: 999px; z-index: 2;
+    }
+    .product-img-wrap {
+      height: 200px; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.3); overflow: hidden;
+    }
+    .product-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+    .product-info { padding: 18px 20px 20px; }
+    .product-name {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 17px; color: var(--brown-dark);
+      margin-bottom: 6px;
+    }
+    .product-price {
+      font-size: 20px; font-weight: 700;
+      color: var(--brown-mid); margin-bottom: 14px;
+    }
+    .product-price span { font-size: 13px; font-weight: 400; color: #9c7a5e; }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-img-wrap {
+      position: relative; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(92,39,23,0.25);
+    }
+    .about-img-wrap img { width: 100%; height: 440px; object-fit: cover; display: block; }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(92,39,23,0.4) 0%, transparent 60%);
+    }
+    .about-text .section-sub { margin-bottom: 28px; }
+    .about-stats {
+      display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'IM Fell English', serif;
+      font-size: 42px; color: var(--brown-dark); line-height: 1;
+    }
+    .stat-label { font-size: 13px; color: #9c7a5e; margin-top: 4px; letter-spacing: 1px; }
+
+    /* ── PROMO BANNER ── */
+    .promo-banner {
+      background: var(--brown-dark);
+      padding: 60px 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .promo-text .promo-eyebrow {
+      font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--peach); font-weight: 700; margin-bottom: 10px;
+    }
+    .promo-title {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(28px, 3.5vw, 46px);
+      color: var(--cream); line-height: 1.1; margin-bottom: 10px;
+    }
+    .promo-desc { color: var(--sand); font-size: 16px; }
+    .btn-promo {
+      background: var(--cream); color: var(--brown-dark);
+      padding: 14px 36px; font-size: 18px; white-space: nowrap;
+      border-radius: 999px;
+      font-family: 'IM Fell Double Pica', serif;
+      cursor: pointer; border: none; transition: background .25s, transform .15s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-promo:hover { background: var(--peach); transform: translateY(-2px); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--sand); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+    }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 28px; padding: 20px 24px;
+      background: var(--cream); border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(92,39,23,0.08);
+      transition: transform .2s;
+    }
+    .contact-item:hover { transform: translateX(4px); }
+    .contact-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--brown-mid); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: #fff;
+    }
+    .contact-detail a, .contact-detail p {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 17px; color: var(--brown-dark);
+      text-decoration: none; transition: color .2s;
+    }
+    .contact-detail a:hover { color: var(--brown-light); text-decoration: underline; }
+    .contact-detail .label {
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: #9c7a5e; margin-bottom: 4px; font-family: 'Lato', sans-serif;
+    }
+
+    /* ── CONTACT FORM ── */
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%; padding: 14px 18px;
+      background: var(--cream); border: 1.5px solid var(--card);
+      border-radius: 12px;
+      font-family: 'Lato', sans-serif; font-size: 15px; color: var(--text-dark);
+      outline: none; transition: border-color .2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--brown-mid); }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .contact-form button {
+      align-self: flex-start;
+      background: var(--brown-mid); color: #fff;
+      border: none; cursor: pointer;
+      padding: 14px 36px; border-radius: 999px;
+      font-family: 'IM Fell Double Pica', serif; font-size: 18px;
+      transition: background .25s, transform .15s;
+    }
+    .contact-form button:hover { background: var(--brown-dark); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown-dark); color: var(--sand);
+      padding: 48px 80px 28px;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: 'IM Fell English', serif;
+      font-size: 30px; color: var(--cream); margin-bottom: 6px;
+    }
+    .footer-tagline { font-size: 14px; color: var(--sand); letter-spacing: 2px; text-transform: uppercase; }
+    .footer-links { display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; }
+    .footer-links a {
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 15px; color: var(--sand); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-copy { font-size: 13px; color: rgba(216,199,179,0.6); }
+    .divider { width: 60px; height: 2px; background: var(--brown-mid); border-radius: 2px; }
+
+    /* ── MOBILE NAV ── */
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none;
+    }
+    .nav-toggle span {
+      display: block; width: 26px; height: 2px;
+      background: var(--cream); border-radius: 2px; transition: all .3s;
+    }
+    .mobile-nav {
+      display: none; flex-direction: column;
+      position: fixed; top: 64px; left: 0; width: 100%;
+      background: var(--brown-dark);
+      z-index: 999;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 16px 32px;
+      font-family: 'IM Fell Double Pica', serif;
+      font-size: 18px; color: var(--cream); text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background .2s;
+    }
+    .mobile-nav a:hover { background: rgba(255,255,255,0.06); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 32px; right: 32px;
+      background: var(--brown-dark); color: var(--cream);
+      padding: 14px 28px; border-radius: 12px;
+      font-family: 'IM Fell Double Pica', serif; font-size: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .3s, transform .3s;
+      pointer-events: none; z-index: 9999;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s, transform .7s;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      header { padding: 0 24px; }
+      nav, .btn-nav { display: none; }
+      .nav-toggle { display: flex; }
+      #home { padding: 100px 32px 80px; }
+      .hero-img { display: none; }
+      section { padding: 64px 32px; }
+      #about { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .promo-banner { padding: 48px 32px; text-align: center; justify-content: center; }
+      footer { padding: 48px 24px 28px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <a href="#home" class="nav-brand">Coffe Shop</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#services">Menu</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="#services" class="btn btn-nav">Shop Now</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#home"     onclick="closeMobile()">Home</a>
+  <a href="#services" onclick="closeMobile()">Menu</a>
+  <a href="#about"    onclick="closeMobile()">About</a>
+  <a href="#contact"  onclick="closeMobile()">Contact</a>
+</nav>
+
+<!-- ═══ HERO / HOME ═══ -->
+<section id="home">
+  <div class="hero-content reveal">
+    <span class="hero-badge">Open 24/7 · Bakery &amp; Café</span>
+    <h1 class="hero-title">Sweet Moments<br/>Start Here</h1>
+    <p class="hero-sub">Every cake is thoughtfully crafted with love and passion, combining rich flavors and soft textures to create sweet moments you'll always remember.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn btn-primary">Shop Now</a>
+      <a href="#about" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+  <img
+    src="image 2.webp"
+    alt="Delicious coffee and pastries"
+    class="hero-img"
+  />
+  <div class="hero-scroll">
+    <span>↓</span>
+    scroll
+  </div>
+</section>
+
+<!-- ═══ SERVICES / MENU ═══ -->
+<section id="services">
+  <div class="section-header reveal">
+    <span class="section-tag">Our Menu</span>
+    <h2 class="section-title">Hold a Cake</h2>
+    <p class="section-sub">Spack out each dessert profiting — indulge in our finest selections.</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card reveal">
+      <span class="sale-badge">SALE</span>
+      <div class="product-img-wrap">
+        <img src="image 14.png" alt="Latte Art Coffee" />
+      </div>
+      <div class="product-info">
+        <p class="product-name">Latte Art Coffee</p>
+        <p class="product-price">Rp 30,000 <span>/ cup</span></p>
+        <button class="btn btn-sm" onclick="addToCart('Latte Art Coffee')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <span class="sale-badge">SALE</span>
+      <div class="product-img-wrap">
+        <img src="image 15.png" alt="Caramel Latte" />
+      </div>
+      <div class="product-info">
+        <p class="product-name">Caramel Latte</p>
+        <p class="product-price">Rp 20,000 <span>/ cup</span></p>
+        <button class="btn btn-sm" onclick="addToCart('Caramel Latte')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <span class="sale-badge">SALE</span>
+      <div class="product-img-wrap">
+        <img src="image 13.png" alt="Sweet Chocolate Cake" />
+      </div>
+      <div class="product-info">
+        <p class="product-name">Sweet Chocolate Cake</p>
+        <p class="product-price">Rp 45,000 <span>/ slice</span></p>
+        <button class="btn btn-sm" onclick="addToCart('Sweet Chocolate Cake')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <span class="sale-badge">SALE</span>
+      <div class="product-img-wrap">
+        <img src="image 16.png" alt="Croissant Chocolate" />
+      </div>
+      <div class="product-info">
+        <p class="product-name">Croissant Chocolate</p>
+        <p class="product-price">Rp 19,000 <span>/ pcs</span></p>
+        <button class="btn btn-sm" onclick="addToCart('Croissant Chocolate')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-wrap">
+        <img src="images.jpg" alt="Matcha Tiramisu" />
+      </div>
+      <div class="product-info">
+        <p class="product-name">Matcha Tiramisu</p>
+        <p class="product-price">Rp 38,000 <span>/ portion</span></p>
+        <button class="btn btn-sm" onclick="addToCart('Matcha Tiramisu')">Buy Now</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-wrap">
+        <img src="image 22.png" alt="Ice Latte" />
+      </div>
+      <div class="product-info">
+        <p class="product-name">Ice Latte</p>
+        <p class="product-price">Rp 22,000 <span>/ pcs</span></p>
+        <button class="btn btn-sm" onclick="addToCart('Ice Latte')">Buy Now</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-img-wrap reveal">
+    <img src="image 11.png" alt="The Ultimate Cafe Experience" />
+  </div>
+  <div class="about-text reveal">
+    <span class="section-tag">About Us</span>
+    <h2 class="section-title">The Ultimate Cafe Experience</h2>
+    <p class="section-sub">Experience a world where premium coffee meets exquisite desserts. Crafted for those with a refined palate, every visit is an occasion worth savoring.</p>
+    <p class="section-sub" style="margin-top:14px;">We source only the finest beans and freshest ingredients, baked daily with unwavering dedication to quality and taste.</p>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Years Brewing</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Menu Items</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10k+</div>
+        <div class="stat-label">Happy Guests</div>
+      </div>
+    </div>
+    <br/>
+    <a href="#contact" class="btn btn-primary" style="margin-top:8px;">Find Us</a>
+  </div>
+</section>
+
+<!-- ═══ PROMO BANNER ═══ -->
+<div class="promo-banner reveal">
+  <div class="promo-text">
+    <p class="promo-eyebrow">Special Sale</p>
+    <h2 class="promo-title">Buy 2 Coffee,<br/>Get 1 Cake Free!</h2>
+    <p class="promo-desc">Limited time offer — visit us today and claim your free slice.</p>
+  </div>
+  <a href="#contact" class="btn-promo">Claim Sale</a>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="section-header reveal">
+    <span class="section-tag">Get In Touch</span>
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-sub">We'd love to hear from you. Visit us, call, or drop a message below.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-detail">
+          <p class="label">Location</p>
+          <a href="https://maps.google.com/?q=Coffe+Street+No+12" target="_blank" rel="noopener">
+            Coffe Street No.12
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail">
+          <p class="label">Phone</p>
+          <a href="tel:+6281234567890">0812-3456-7890</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-detail">
+          <p class="label">Email</p>
+          <a href="mailto:coffeeshop@gmail.com">coffeeshop@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-detail">
+          <p class="label">Hours</p>
+          <p>Open 24 / 7 — Every Day</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reveal">
+      <form class="contact-form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <input type="text"  placeholder="Your Name"  required />
+          <input type="email" placeholder="Your Email" required />
+        </div>
+        <input type="text" placeholder="Subject" />
+        <textarea placeholder="Your message..."></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-brand">Coffe Shop</div>
+  <p class="footer-tagline">Sweet Moments Start Here</p>
+  <div class="divider"></div>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#services">Menu</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:+6281234567890">0812-3456-7890</a>
+    <a href="mailto:coffeeshop@gmail.com">coffeeshop@gmail.com</a>
+  </div>
+  <p class="footer-copy">© 2025 Coffe Shop. All rights reserved.</p>
+</footer>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast"></div>
+
+<script>
+  // Mobile nav toggle
+  const toggle    = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+  function closeMobile() { mobileNav.classList.remove('open'); }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer  = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach((el) => observer.observe(el));
+
+  // Toast helper
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  
+  function addToCart(name) {
+    showToast('🛒 ' + name + ' added to cart!');
+  }
+
+  // Contact form submit
+  function submitForm(e) {
+    e.preventDefault();
+    showToast("✅ Message sent! We'll be in touch soon.");
+    e.target.reset();
+  }
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks  = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach((s) => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach((a) => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--peach)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
